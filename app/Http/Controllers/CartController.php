@@ -108,7 +108,7 @@ class CartController extends Controller
         session()->put('cart_total', $total);
         $count = count($cart);
 
-        //Comment
+
         return view('cart.index', compact('cart', 'total', 'count'));
     }
 }
