@@ -15,7 +15,7 @@
                 <x-inputs.text id="flavor" name="flavor" label="Flavor" placeholder="chocolate" />
 
 
-                <label for="category" class="block mb-2 text-sm font-medium text-gray-700">
+                {{-- <label for="category" class="block mb-2 text-sm font-medium text-gray-700">
                     Category
                 </label>
                 <select name="category" id="category"
@@ -26,7 +26,31 @@
                     @empty
                         <option disabled>No categories available</option>
                     @endforelse
-                </select>
+                </select> --}}
+
+
+
+                <div x-data="{ otherSelected: false }">
+
+                    <label for="category">Category</label>
+                    <select name="category" id="category" class="border p-2 w-full"
+                        x-on:change="otherSelected = ($event.target.value === 'other')">
+                        <option value="">-- Select Category --</option>
+                        @foreach ($categories as $cat)
+                            <option value="{{ $cat }}">{{ $cat }}</option>
+                        @endforeach
+                        <option value="other">Other</option>
+                    </select>
+
+                    <!-- This input only appears when "Other" is selected -->
+                    <div x-show="otherSelected" class="mt-2">
+                        <label for="custom_category">Enter custom category</label>
+                        <input type="text" name="custom_category" id="custom_category" class="border p-2 w-full"
+                            placeholder="Your category...">
+                    </div>
+
+                </div>
+
 
 
 

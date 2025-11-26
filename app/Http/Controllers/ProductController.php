@@ -37,13 +37,21 @@ class ProductController extends Controller
     {
         $cart = session()->get('cart') ?? [];
         $count = count($cart);
+        $products = Product::all();
+        $categories = $products->pluck('category')->unique();
 
         return view('menu.createProducts', [
             'count' => $count,
-            'cart' => $cart,     // ← ADD THIS
+            'cart' => $cart,
+            'categories' => $categories     // ← ADD THIS
         ]);
     }
-
+    private function resolveCategory(Request $request)
+    {
+        return $request->category === 'other'
+            ? $request->custom_category
+            : $request->category;
+    }
     /**
      * Store a newly created resource in storage.
      */
@@ -53,12 +61,15 @@ class ProductController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'required|string',
             'flavor' => 'required|string',
-            'category' => 'nullable|string',
+            'category' => 'required',
+            'custom_category' => 'required_if:category,Other',
             'size' => 'required|string',
             'price' => 'required|integer',
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
 
         ]);
+        // Use function
+        $validatedData['category'] = $this->resolveCategory($request);
         $path = $request->file('avatar')->store('avatar', 'public');
 
         // Add path to validated data
