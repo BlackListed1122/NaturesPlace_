@@ -15,7 +15,7 @@
 
 </x-layout> --}}
 
-
+{{-- 
 
 <x-layout>
     <div class="max-w-6xl mx-auto mt-10">
@@ -64,4 +64,4 @@
 
 
 
-</x-layout>
+</x-layout> --}}

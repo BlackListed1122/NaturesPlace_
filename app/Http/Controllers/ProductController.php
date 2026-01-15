@@ -86,14 +86,20 @@ class ProductController extends Controller
 
         return view('menu.show')->with('product', $product);
     }
-    //  public function show($id): View
-    // {
-    //     $product = Product::findOrFail($id); // ✅ makes sure it exists
-    //     return view('menu.show', compact('product'));
-    // }
-    /**
-     * Show the form for editing the specified resource.
-     */
+    //show all products
+    public function menuProducts(Product $product): View
+    {
+
+        $products = Product::all(); // or filter by category
+        $cart = session()->get('cart', []);
+        $cart = session()->get('cart') ?? [];
+        $count = count($cart);
+        return view('menu.menuProduct', [
+            'products' => $products,
+            'count' => $count
+        ]);
+    }
+
     public function edit(Product $product): View
     {
         return view('menu.edit')->with('product', $product);

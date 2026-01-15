@@ -14,6 +14,8 @@ use App\Http\Controllers\RegisterController;
 
 Route::get('/', [HomeController::class, 'index'])->name('pages.index');
 Route::resource('products', ProductController::class);
+Route::get('/menu/products', [ProductController::class, 'menuProducts'])
+    ->name('menu.products');
 Route::resource('orders', OrderController::class);
 
 

@@ -56,45 +56,6 @@
 
                 <x-inputs.file id="avatar" name="avatar" label="Avatar" />
 
-                <div class="flex items-center justify-center min-h-screen bg-gray-50">
-                    <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-sm">
-                        <form>
-                            <label for="image" class="block mb-2 text-sm font-medium text-gray-700">
-                                Upload Image
-                            </label>
-
-                            <input type="file" id="image" name="image" accept="image/*"
-                                class="w-full border border-gray-300 rounded-lg p-2 mb-4"
-                                onchange="previewImage(event)">
-
-                            <!-- Image Preview -->
-                            <div class="flex justify-center">
-                                <img id="preview" class="hidden w-48 h-48 object-cover rounded-lg shadow"
-                                    alt="Preview">
-                            </div>
-
-
-                        </form>
-                    </div>
-                </div>
-
-                <script>
-                    function previewImage(event) {
-                        const input = event.target;
-                        const preview = document.getElementById('preview');
-                        const file = input.files[0];
-
-                        if (file) {
-                            const reader = new FileReader();
-                            reader.onload = function(e) {
-                                preview.src = e.target.result;
-                                preview.classList.remove('hidden');
-                            }
-                            reader.readAsDataURL(file);
-                        }
-                    }
-                </script>
-
 
                 <button class="bg-blue-500 px-3 py-2 text-white rounded-md hover:bg-blue-600 transition" type="submit">
                     Submit

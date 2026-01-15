@@ -1,6 +1,6 @@
 <x-layout>
     @props([
-        'categorys' => ['Coffee', 'Non Coffee', 'Burger', 'Classic Waffle', 'Premium Waffle'],
+        'categorys' => ['Coffee', 'Non Coffee', 'Milky Series', 'Snack Menu', 'Classic Waffle', 'Premium Waffle'],
         'sizes' => ['Small', 'Medium', 'Large'],
     ])
     <x-header :count="$count" />
@@ -15,7 +15,7 @@
                 <x-inputs.text id="flavor" name="flavor" label="Flavor" placeholder="chocolate" />
 
 
-                {{-- <label for="category" class="block mb-2 text-sm font-medium text-gray-700">
+                <label for="category" class="block mb-2 text-sm font-medium text-gray-700">
                     Category
                 </label>
                 <select name="category" id="category"
@@ -26,11 +26,11 @@
                     @empty
                         <option disabled>No categories available</option>
                     @endforelse
-                </select> --}}
+                </select>
 
 
 
-                <div x-data="{ otherSelected: false }">
+                {{-- <div x-data="{ otherSelected: false }">
 
                     <label for="category">Category</label>
                     <select name="category" id="category" class="border p-2 w-full"
@@ -49,7 +49,7 @@
                             placeholder="Your category...">
                     </div>
 
-                </div>
+                </div> --}}
 
 
 
