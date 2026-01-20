@@ -16,6 +16,7 @@
                         <tr class="border-b text-left">
                             <th class="p-2">Id</th>
                             <th class="p-2">Product</th>
+
                             <th class="p-2 text-center">Qty</th>
                             <th class="p-2 text-right">Price</th>
                             <th class="p-2 text-right">Subtotal</th>
@@ -102,9 +103,7 @@
     <p class="text-gray-500 text-center">Your cart is empty ☕</p>
     @endif
 
-    {{-- <div class="text-center mt-6">
-            <a href="{{ route('menu.index') }}" class="text-indigo-600 hover:underline">← Back to Menu</a>
-        </div> --}}
+
     </div>
 
 </x-layout>

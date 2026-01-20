@@ -20,7 +20,8 @@ class OrderController extends Controller
 
         return view('order.index', [
             'products' => $products,
-            'count' => $count
+            'count' => $count,
+            'cart' => $cart
         ]);
     }
 

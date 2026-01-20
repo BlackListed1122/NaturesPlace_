@@ -1,6 +1,7 @@
 <x-layout>
     <x-header :count="$count" />
 
+
     <div class="max-w-6xl mx-auto mt-10">
         <h1 class="text-3xl font-bold mb-6 text-center">☕ Café Menu</h1>
 
@@ -18,7 +19,11 @@
                             class="w-48 h-48 object-cover rounded mb-3 mx-auto">
                     @endif
 
-                    <h2 class="text-xl font-semibold">{{ $product->name }}</h2>
+                    <div class="flex gap-2 ">
+                        <h2 class="text-xl font-semibold">{{ $product->name }}</h2>
+                        <h2 class="text-xl font-semibold">{{ $product->size }}</h2>
+                    </div>
+
                     <p class="text-gray-600 mb-2">₱{{ number_format($product->price, 2) }}</p>
 
                     <form action="{{ route('cart.add') }}" method="POST" class="flex flex-col items-center">
@@ -42,6 +47,9 @@
             </a>
         </div> --}}
     </div>
+    {{-- Add to cart --}}
+
+
 
 
 

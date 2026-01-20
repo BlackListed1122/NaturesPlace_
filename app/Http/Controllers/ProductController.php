@@ -25,9 +25,33 @@ class ProductController extends Controller
     {
         //@desc Show menu listings
         //@route GET / menu
+
+        $coffee = Product::where('category', 'Coffee')->get();
+        $nonCoffee = Product::where('category', 'Non Coffee')->get();
+        $milkySeries = Product::where('category', 'Milky Series')->get();
+        $snackMenu = Product::where('category', 'Snack Menu')->get();
+        $classicWaffle = Product::where('category', 'Classic Waffle')->get();
+        $premiumWaffle = Product::where('category', 'Premium Waffle')->get();
+
+
         $products = Product::all();
 
-        return view('menu.index')->with('products', $products);
+        return view('menu.index')->with(
+            'products',
+            $products,
+            'coffee',
+            $coffee,
+            'nonCoffee',
+            $nonCoffee,
+            'milkySeries',
+            $milkySeries,
+            'snackMenu',
+            $snackMenu,
+            'classicWaffle',
+            $classicWaffle,
+            'premiumWaffle',
+            $premiumWaffle
+        );
     }
 
     /**
@@ -75,7 +99,7 @@ class ProductController extends Controller
         // Add path to validated data
         $validatedData['avatar'] = $path;
         Product::create($validatedData);
-        return redirect()->route('pages.index');
+        return redirect()->route('menu.products');
     }
 
     /**
@@ -90,13 +114,27 @@ class ProductController extends Controller
     public function menuProducts(Product $product): View
     {
 
+        $coffee = Product::where('category', 'Coffee')->get();
+        $nonCoffee = Product::where('category', 'Non Coffee')->get();
+        $milkySeries = Product::where('category', 'Milky Series')->get();
+        $snackMenu = Product::where('category', 'Snack Menu')->get();
+        $classicWaffle = Product::where('category', 'Classic Waffle')->get();
+        $premiumWaffle = Product::where('category', 'Premium Waffle')->get();
+
         $products = Product::all(); // or filter by category
         $cart = session()->get('cart', []);
         $cart = session()->get('cart') ?? [];
         $count = count($cart);
+
         return view('menu.menuProduct', [
             'products' => $products,
-            'count' => $count
+            'count' => $count,
+            'coffee' => $coffee,
+            'nonCoffee' => $nonCoffee,
+            'milkySeries' => $milkySeries,
+            'snackMenu' =>  $snackMenu,
+            'classicWaffle' => $classicWaffle,
+            'premiumWaffle' => $premiumWaffle
         ]);
     }
 
@@ -154,7 +192,8 @@ class ProductController extends Controller
         //     return redirect::route('dashboard')->with('success', 'Job deleted successfully.');
         // }
 
+        return redirect()->route('menu.products');
 
-        return redirect::route('pages.index')->with('success', 'Job deleted successfully.');
+        // return redirect::route('menu.menuProduct')->with('success', 'Job deleted successfully.');
     }
 }
