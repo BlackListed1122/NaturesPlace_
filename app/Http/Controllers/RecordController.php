@@ -13,8 +13,9 @@ class RecordController extends Controller
      */
     public function index()
     {
-        $record = Record::all();
-        return view('records.create');
+        $record = Record::with('product')->get();
+
+        return view('records.index', compact('record'));
     }
 
     /**
@@ -78,10 +79,31 @@ class RecordController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Record $record)
+    public function show(Record $record) // singular
     {
-        // return view('records.show', compact('record'));
+        // Decode JSON arrays
+        $productIds   = json_decode($record->product_id, true);
+        $productNames = json_decode($record->name, true);
+        $quantities   = json_decode($record->quantity, true);
+        $subtotals    = json_decode($record->subtotal, true);
+
+        // Combine arrays into products
+        $products = [];
+        for ($i = 0; $i < count($productIds); $i++) {
+            $products[] = [
+                'id'       => $productIds[$i] ?? null,
+                'name'     => $productNames[$i] ?? 'No Product',
+                'quantity' => $quantities[$i] ?? 0,
+                'subtotal' => $subtotals[$i] ?? 0,
+            ];
+        }
+        dd($record, $products);
+
+        // Pass $products and $record to Blade
+        return view('records.show', compact('record', 'products'));
     }
+
+
 
     /**
      * Show the form for editing the specified resource.
