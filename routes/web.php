@@ -32,7 +32,7 @@ Route::get('/register', [RegisterController::class, 'show'])->name('signup.show'
 Route::post('/register', [RegisterController::class, 'store'])->name('signup.store');
 
 
-Route::resource('record', RecordController::class);
+Route::resource('records', RecordController::class);
 // Route::get('/record/create', [RecordController::class, 'create'])->name('record.create');
 // Route::post('/record/store', [RecordController::class, 'store'])->name('record.store');
 // // Route::get('/record/{record}', [RecordController::class, 'show'])->name('record.show');

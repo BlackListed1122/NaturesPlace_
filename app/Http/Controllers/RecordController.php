@@ -13,9 +13,9 @@ class RecordController extends Controller
      */
     public function index()
     {
-        $record = Record::with('product')->get();
+        $records = Record::with('product')->get();
 
-        return view('records.index', compact('record'));
+        return view('records.index', compact('records'));
     }
 
     /**
@@ -41,7 +41,7 @@ class RecordController extends Controller
         // $cart = session()->get('cart', []);
 
         // session()->put('cart', $cart);
-        // $record = Record::create($validatedData);
+        // $recordss = Record::create($validatedData);
 
         // $productIds = $request->cart;
         // example: [1, 5, 10]
@@ -79,29 +79,43 @@ class RecordController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Record $record) // singular
+    public function show(Record $record)
     {
-        // Decode JSON arrays
-        $productIds   = json_decode($record->product_id, true);
-        $productNames = json_decode($record->name, true);
-        $quantities   = json_decode($record->quantity, true);
-        $subtotals    = json_decode($record->subtotal, true);
+        $productIds   = json_decode($record->product_id, true) ?? [];
+        $productNames = json_decode($record->name, true) ?? [];
+        $quantities   = json_decode($record->quantity, true) ?? [];
+        $subtotals    = json_decode($record->subtotal, true) ?? [];
 
-        // Combine arrays into products
         $products = [];
-        for ($i = 0; $i < count($productIds); $i++) {
+
+        $count = max(
+            count($productIds),
+            count($productNames),
+            count($quantities),
+            count($subtotals)
+        );
+
+        for ($i = 0; $i < $count; $i++) {
             $products[] = [
-                'id'       => $productIds[$i] ?? null,
+                'id'       => $productIds[$i] ?? 'Unknown',
                 'name'     => $productNames[$i] ?? 'No Product',
                 'quantity' => $quantities[$i] ?? 0,
                 'subtotal' => $subtotals[$i] ?? 0,
             ];
         }
-        dd($record, $products);
 
-        // Pass $products and $record to Blade
-        return view('records.show', compact('record', 'products'));
+
+        if (empty($productIds)) {
+            return view('records.show', [
+                'record' => $record,
+                'products' => [],
+            ]);
+        } else {
+
+            return view('records.show', compact('record', 'products'));
+        }
     }
+
 
 
 

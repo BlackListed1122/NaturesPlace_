@@ -1,24 +1,27 @@
 <x-layout>
-    {{-- <h1>Transaction #{{ $record->id }}</h1> --}}
+    <h2 class="text-xl font-bold mb-4">Transaction History</h2>
 
-    <table class="border w-full mt-4">
+    <table class="border w-full">
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Product</th>
-                <th>Quantity</th>
-                <th>Subtotal</th>
+                <th>Total</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($products as $product)
+            @foreach ($records as $record)
                 <tr>
-                    <td>{{ $product['id'] }}</td>
-                    <td>{{ $product['name'] }}</td>
-                    <td>{{ $product['quantity'] }}</td>
-                    <td>{{ $product['subtotal'] }}</td>
+                    <td>#{{ $record->id }}</td>
+                    <td>₱{{ $record->total }}</td>
+                    <td>
+                        <a href="{{ route('records.show', $record->id) }}" class="text-blue-500 underline">
+                            View
+                        </a>
+                    </td>
                 </tr>
             @endforeach
+
         </tbody>
     </table>
 </x-layout>
