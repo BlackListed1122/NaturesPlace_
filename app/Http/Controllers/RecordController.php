@@ -50,6 +50,7 @@ class RecordController extends Controller
         $productIds = array_keys(session()->get('cart', []));
         $productNames = array_column($cart, 'name');
         $productQuantity = array_column($cart, 'quantity');
+        $productSize = array_column($cart, 'size');
         $productPrice = array_column($cart, 'price');
 
 
@@ -65,6 +66,7 @@ class RecordController extends Controller
             'product_id' => json_encode($productIds),
             'name' => json_encode($productNames),
             'price' => json_encode($productPrice),
+            'size' => json_encode($productSize),
             'quantity' => json_encode($productQuantity),
             'subtotal' => json_encode($subtotals),
             'total' => json_encode($total),
@@ -83,6 +85,7 @@ class RecordController extends Controller
     {
         $productIds   = json_decode($record->product_id, true) ?? [];
         $productNames = json_decode($record->name, true) ?? [];
+        $productSize = json_decode($record->size, true) ?? [];
         $quantities   = json_decode($record->quantity, true) ?? [];
         $subtotals    = json_decode($record->subtotal, true) ?? [];
 
@@ -91,6 +94,7 @@ class RecordController extends Controller
         $count = max(
             count($productIds),
             count($productNames),
+            count($productSize),
             count($quantities),
             count($subtotals)
         );
@@ -99,6 +103,7 @@ class RecordController extends Controller
             $products[] = [
                 'id'       => $productIds[$i] ?? 'Unknown',
                 'name'     => $productNames[$i] ?? 'No Product',
+                'size'     => $productSize[$i] ?? 0,
                 'quantity' => $quantities[$i] ?? 0,
                 'subtotal' => $subtotals[$i] ?? 0,
             ];

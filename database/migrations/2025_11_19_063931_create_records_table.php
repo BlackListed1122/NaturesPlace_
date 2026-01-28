@@ -17,6 +17,7 @@ return new class extends Migration
             $table->json('product_id')->nullable(); // ← one column to store IDs
             $table->json('name')->nullable(); // 
             $table->json('quantity')->nullable(); // 
+            $table->json('size')->nullable(); // 
             $table->json('price')->nullable(); // 
             $table->json('subtotal')->nullable(); // 
             $table->json('total')->nullable(); // 

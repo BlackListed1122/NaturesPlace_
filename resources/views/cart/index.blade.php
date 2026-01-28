@@ -8,7 +8,7 @@
                 {{ session('success') }}
             </div>
         @endif
-        <form action="{{ route('record.store') }}" method="POST">
+        <form action="{{ route('records.store') }}" method="POST">
             @csrf
             @if (count($cart) > 0)
                 <table class="w-full border-collapse">

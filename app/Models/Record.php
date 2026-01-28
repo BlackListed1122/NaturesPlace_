@@ -11,6 +11,7 @@ class Record extends Model
         'name',
         'quantity',
         'price',
+        'size',
         'subtotal',
         'total',
         'active'
@@ -19,6 +20,7 @@ class Record extends Model
     protected $casts = [
         'product_id' => 'array',
         'name' => 'array',
+        'size' => 'array',
         'quantity' => 'array',
         'price' => 'array',
         'subtotal' => 'array',

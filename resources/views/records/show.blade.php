@@ -6,6 +6,7 @@
             <tr>
                 <th>ID</th>
                 <th>Product</th>
+                <th>Size</th>
                 <th>Quantity</th>
                 <th>Subtotal</th>
             </tr>
@@ -15,6 +16,7 @@
                 <tr>
                     <td>{{ $product['id'] }}</td>
                     <td>{{ $product['name'] }}</td>
+                    <td>{{ $product['size'] }}</td>
                     <td>{{ $product['quantity'] }}</td>
                     <td>{{ $product['subtotal'] }}</td>
                 </tr>
