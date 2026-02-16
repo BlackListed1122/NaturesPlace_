@@ -1,6 +1,7 @@
 <x-layout>
-    {{-- <h1>Transaction #{{ $record->id }}</h1> --}}
 
+
+    <x-header :count="$count" />
     <table class="border w-full mt-4">
         <thead>
             <tr>
@@ -19,8 +20,10 @@
                     <td>{{ $product['size'] }}</td>
                     <td>{{ $product['quantity'] }}</td>
                     <td>{{ $product['subtotal'] }}</td>
+
                 </tr>
             @endforeach
+            <td>Total : {{ $record->total }}</td>
         </tbody>
     </table>
 </x-layout>

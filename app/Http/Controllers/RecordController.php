@@ -13,9 +13,20 @@ class RecordController extends Controller
      */
     public function index()
     {
+        $products = Product::all();
+        $cart = session()->get('cart', []);
+        $cart = session()->get('cart') ?? [];
+        $count = count($cart);
+
+
         $records = Record::with('product')->get();
 
-        return view('records.index', compact('records'));
+        return view('records.index', [
+            'records' => $records,
+            'products' => $products,
+            'count' => $count,
+            'cart' => $cart
+        ]);
     }
 
     /**
@@ -83,6 +94,14 @@ class RecordController extends Controller
      */
     public function show(Record $record)
     {
+        $products = Product::all();
+        $cart = session()->get('cart', []);
+        $cart = session()->get('cart') ?? [];
+        $count = count($cart);
+
+
+        $records = Record::with('product')->get();
+
         $productIds   = json_decode($record->product_id, true) ?? [];
         $productNames = json_decode($record->name, true) ?? [];
         $productSize = json_decode($record->size, true) ?? [];
@@ -114,10 +133,17 @@ class RecordController extends Controller
             return view('records.show', [
                 'record' => $record,
                 'products' => [],
+                'count' => $count,
+                'cart' => $cart
             ]);
         } else {
 
-            return view('records.show', compact('record', 'products'));
+            return view('records.show', [
+                'record' => $record,
+                'products' => $products,
+                'count' => $count,
+                'cart' => $cart
+            ]);
         }
     }
 

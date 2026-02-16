@@ -1,4 +1,5 @@
 <x-layout>
+    <x-header :count="$count" />
     <h2 class="text-xl font-bold mb-4">Transaction History</h2>
 
     <table class="border w-full">
