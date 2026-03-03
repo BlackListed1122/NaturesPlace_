@@ -26,4 +26,12 @@ class Product extends Model
     {
         return $this->belongsTo(User::class);
     }
+    protected $casts = [
+        'record' => 'array',
+    ];
+
+    public function getProductsAttribute()
+    {
+        return $this->record;
+    }
 }

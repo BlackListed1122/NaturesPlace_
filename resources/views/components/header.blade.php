@@ -14,7 +14,7 @@
             {{-- <a href="{{ url('/products') }}">Products</a> --}}
             {{-- <a href="{{ url('/products/create') }}">Create Products</a> --}}
             <a href="{{ url('/orders') }}">Order</a>
-            <a href="{{ url('/records') }}">Dashboard</a>
+            <a href="{{ url('/dashboard') }}">Dashboard</a>
 
             <div class="relative">
                 <a href="{{ url('/cart') }}" class=""><i class="fa-solid fa-cart-shopping"></i></a>

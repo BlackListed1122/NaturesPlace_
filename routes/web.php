@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
@@ -33,6 +34,7 @@ Route::post('/register', [RegisterController::class, 'store'])->name('signup.sto
 
 
 Route::resource('records', RecordController::class);
+Route::resource('dashboard', DashboardController::class);
 // Route::get('/record/create', [RecordController::class, 'create'])->name('record.create');
 // Route::post('/record/store', [RecordController::class, 'store'])->name('record.store');
 // // Route::get('/record/{record}', [RecordController::class, 'show'])->name('record.show');

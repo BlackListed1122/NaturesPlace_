@@ -17,15 +17,49 @@ class RecordController extends Controller
         $cart = session()->get('cart', []);
         $cart = session()->get('cart') ?? [];
         $count = count($cart);
+        $records = Record::with('product')->get();
 
 
         $records = Record::with('product')->get();
+
+        foreach ($records as $record) {
+            // Ensure name and quantity are arrays
+            $namesArray = is_array($record->name) ? $record->name : json_decode($record->name, true);
+            $quantityArray = is_array($record->quantity) ? $record->quantity : json_decode($record->quantity, true);
+
+            // Clean arrays
+            $namesArray = array_filter($namesArray, fn($n) => !empty($n));
+            $quantityArray = array_filter($quantityArray, fn($q) => !empty($q));
+
+            // Take first 3 items
+            $firstThreeNames = array_slice($namesArray, 0, 3);
+            $firstThreeQty = array_slice($quantityArray, 0, 3);
+
+            // Combine names and quantities
+            $summary = [];
+            for ($i = 0; $i < count($firstThreeNames); $i++) {
+                $qty = $firstThreeQty[$i] ?? 1; // default 1 if missing
+                $summary[] = $firstThreeNames[$i] . ' x' . $qty;
+            }
+
+            $record->summary = implode(', ', $summary);
+
+            // Add gray dots if more than 3 items
+            if (count($namesArray) > 3) {
+                $record->summary .= ' <span class="text-gray-400">...</span>';
+            }
+        }
 
         return view('records.index', [
             'records' => $records,
             'products' => $products,
             'count' => $count,
-            'cart' => $cart
+            'cart' => $cart,
+
+
+
+
+
         ]);
     }
 

@@ -1,28 +1,37 @@
 <x-layout>
+
     <x-header :count="$count" />
-    <h2 class="text-xl font-bold mb-4">Transaction History</h2>
-
-    <table class="border w-full">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Total</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($records as $record)
+    <div class="flex h-screen bg-gray-100">
+        <x-side-bar />
+        <table class="border w-full">
+            <thead>
                 <tr>
-                    <td>#{{ $record->id }}</td>
-                    <td>₱{{ $record->total }}</td>
-                    <td>
-                        <a href="{{ route('records.show', $record->id) }}" class="text-blue-500 underline">
-                            View
-                        </a>
-                    </td>
-                </tr>
-            @endforeach
+                    <th>Date</th>
+                    <th>Order Id</th>
+                    <th>Summary</th>
+                    <th>Amount</th>
 
-        </tbody>
-    </table>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach ($records as $record)
+                    <tr>
+                        <td>{{ $record->created_at->format('Y-m-d') }}</td>
+                        <td>{{ $record->id }}</td>
+                        <td>{!! $record->summary !!}</td>
+                        <td>₱{{ $record->total }}</td>
+
+                        <td>
+                            <a href="{{ route('records.show', $record->id) }}" class="text-blue-500 underline">
+                                View
+                            </a>
+                        </td>
+                    </tr>
+                @endforeach
+
+
+            </tbody>
+        </table>
+    </div>
 </x-layout>
