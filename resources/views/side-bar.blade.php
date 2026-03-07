@@ -19,7 +19,7 @@
             <span>Reports</span>
         </a>
 
-        <a href="#" class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-gray-200 transition">
+        <a href="{{ url('/staff') }}"class="flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-gray-200 transition">
             <i class="fa fa-users"></i>
             <span>Staff</span>
         </a>

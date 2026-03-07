@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use phpDocumentor\Reflection\Location;
+use Illuminate\Support\Facades\Hash;
+
 
 class RegisterController extends Controller
 {
@@ -25,8 +27,24 @@ class RegisterController extends Controller
     {
         //@desc Show menu listings
         //@route GET / menu
-        $user = User::all();
-        return view('account.signup')->with('user', $user);
+
+        $cart = session()->get('cart', []);
+        $cart = session()->get('cart') ?? [];
+        $count = count($cart);
+
+        $users = User::all();
+
+        // return view('account.signup')->with('user', $user);
+        return view('account.signup', [
+            'users' => $users,
+            'count' => $count,
+            'cart' => $cart,
+
+
+
+
+
+        ]);
     }
 
     /**
@@ -34,15 +52,76 @@ class RegisterController extends Controller
      */
     public function create()
     {
-        //
+        //@desc Show menu listings
+        //@route GET / menu
+
+        $cart = session()->get('cart', []);
+        $cart = session()->get('cart') ?? [];
+        $count = count($cart);
+
+        $users = User::all();
+
+        // return view('account.signup')->with('user', $user);
+        return view('account.signup', [
+            'users' => $users,
+            'count' => $count,
+            'cart' => $cart,
+
+        ]);
     }
+
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    // public function store(Request $request): RedirectResponse
+    // {
+    //     $validatedData = $request->validatecreate([
+    //         'name' => $request->name,
+    //         'email' => $request->email,
+    //         'password' => Hash::make($request->password),
+    //         'contact_phone' => $request->contact_phone,
+    //         'user_level' => $request->user_level,
+
+    //         // 'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+    //     ]);
+    //     // // Use function
+    //     // $path = $request->file('avatar')->store('avatar', 'public');
+
+    //     // // Add path to validated data
+    //     // $validatedData['avatar'] = $path;
+    //     //hash password
+    //     $validatedData['password'] = Hash::make($validatedData['password']);
+    //     User::create($validatedData);
+
+    //     return redirect()->route('menu.index');
+    // }
+
+
+    public function store(Request $request): RedirectResponse
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:6',
+            'contact_phone' => 'nullable|string|max:20',
+            'user_level' => 'required|in:Cashier,Admin',
+            'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        // Hash password
+        $validatedData['password'] = Hash::make($validatedData['password']);
+
+        // Handle avatar upload
+        if ($request->hasFile('avatar')) {
+            $path = $request->file('avatar')->store('avatars', 'public');
+            $validatedData['avatar'] = $path;
+        }
+
+        // Create user
+        User::create($validatedData);
+
+        return redirect()->route('account.index');
     }
 
     /**
@@ -72,8 +151,17 @@ class RegisterController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id): RedirectResponse
     {
-        //
+        $user = User::findOrFail($id);
+
+        // Delete avatar if exists
+        if ($user->avatar) {
+            Storage::disk('public')->delete($user->avatar);
+        }
+
+        $user->delete();
+
+        return redirect('/staff')->with('success', 'User deleted successfully');
     }
 }

@@ -7,11 +7,8 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RecordController;
 use Illuminate\Support\Facades\Route;
-
 use App\Http\Controllers\RegisterController;
-
-
-
+use App\Http\Controllers\StaffController;
 
 Route::get('/', [HomeController::class, 'index'])->name('pages.index');
 Route::resource('products', ProductController::class);
@@ -29,14 +26,15 @@ Route::post('/cart/clear', [CartController::class, 'clearCart'])->name('cart.cle
 // Route::get('/cart/remove/{id}', [CartController::class, 'remove'])->name('cart.remove');
 Route::get('/cart/orders', [CartController::class, 'index'])->name('cart.index');
 
-Route::get('/register', [RegisterController::class, 'show'])->name('signup.show');
-Route::post('/register', [RegisterController::class, 'store'])->name('signup.store');
+// Route::get('/register', [RegisterController::class, 'show'])->name('signup.show');
+// Route::post('/register', [RegisterController::class, 'store'])->name('signup.store');
 
+Route::resource('account', RegisterController::class);
+Route::resource('staff', StaffController::class);
 
 Route::resource('records', RecordController::class);
 Route::resource('dashboard', DashboardController::class);
 // Route::get('/record/create', [RecordController::class, 'create'])->name('record.create');
 // Route::post('/record/store', [RecordController::class, 'store'])->name('record.store');
 // // Route::get('/record/{record}', [RecordController::class, 'show'])->name('record.show');
-
 // Route::get('/records/{record}', [RecordController::class, 'show'])->name('records.show');
