@@ -56,7 +56,7 @@
                                 </td>
 
                                 <td class="px-6 py-4">
-                                    {{ $user->role }}
+                                    {{ $user->user_level }}
                                 </td>
 
                                 <td class="px-6 py-4 flex justify-center gap-3">

@@ -3,6 +3,7 @@
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RecordController;
@@ -28,8 +29,14 @@ Route::get('/cart/orders', [CartController::class, 'index'])->name('cart.index')
 
 // Route::get('/register', [RegisterController::class, 'show'])->name('signup.show');
 // Route::post('/register', [RegisterController::class, 'store'])->name('signup.store');
+Route::middleware('guest')->group(function () {
+    Route::resource('account', RegisterController::class);
+    Route::get('/login', [LoginController::class, 'login'])->name('login');
+    Route::post('/login', [LoginController::class, 'authenticate'])->name('login.authenticate');
+});
 
-Route::resource('account', RegisterController::class);
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
 Route::resource('staff', StaffController::class);
 
 Route::resource('records', RecordController::class);
